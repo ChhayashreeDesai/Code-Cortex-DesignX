@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrightNest - A Home That Understands You</title>
+
+    <!-- Google Fonts: Poppins and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ============================================
+           ROOT CSS VARIABLES & BASE STYLES
+           ============================================ */
+        :root {
+            --primary: #1c2e4a;
+            --secondary: #0f3d66;
+            --accent-teal: #00d4d4;
+            --accent-purple: #6946ff;
+            --bg-light: #fefdfb;
+            --bg-gradient-light: #f5f3f0;
+            --text-dark: #0a0a0a;
+            --text-soft: #3a3a3a;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --shadow-soft: 0 12px 24px rgba(0, 0, 0, 0.06), 0 6px 12px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 0 0 2px rgba(0, 20, 60, 0.15), 0 16px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: 4rem; line-height: 1.1; }
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-soft);
+        }
+
+        /* Glass Card Styling */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 2px solid var(--primary);
+            backdrop-filter: blur(10px);
+            border-radius: 0;
+            padding: 2rem;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.06);
+            transition: all 0.25s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .btn-pill {
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-pill:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-pill.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Scroll Reveal Animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           HEADER / NAVIGATION
+           ============================================ */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-light);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-soft);
+            font-weight: 500;
+            transition: color 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 3rem 0;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 212, 0.02) 0%, rgba(105, 70, 255, 0.02) 100%);
+            z-index: -2;
+        }
+
+        /* Glowing orb background element */
+        .hero-orb {
+            position: absolute;
+            bottom: -200px;
+            left: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 212, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            animation: float-subtle 8s ease-in-out infinite;
+        }
+
+        @keyframes float-subtle {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 30px); }
+        }
+
+        .hero-content {
+            max-width: 550px;
+            z-index: 10;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-image {
+            flex: 1;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.1s backwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+            border-radius: 0;
+            border: 3px solid var(--primary);
+            box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content h1 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-soft);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Floating Cards in Hero */
+        .floating-cards-container {
+            position: absolute;
+            right: 2rem;
+            bottom: 3rem;
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            z-index: 5;
+        }
+
+        .floating-card {
+            width: 200px;
+            padding: 1.2rem;
+            background: var(--glass-bg);
+            border: 2px solid var(--primary);
+            border-radius: 0;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.08);
+            transition: all 0.25s ease;
+        }
+
+        .floating-card:nth-child(1) {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-card:nth-child(2) {
+            animation: float 5s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+
+        .floating-card:nth-child(3) {
+            animation: float 6s ease-in-out infinite;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .floating-card:hover {
+            transform: translateY(-12px);
+            background: var(--primary);
+            color: white;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 1024px) {
+            .floating-cards-container {
+                position: relative;
+                margin-top: 2rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #hero {
+                min-height: 80vh;
+                padding: 3rem 0;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* ============================================
+           HOW IT WORKS SECTION
+           ============================================ */
+        #how-it-works {
+            padding: 6rem 0;
+            background: var(--bg-light);
+            border-top: 3px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        #how-it-works h2 {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+        }
+
+        .step-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .step-card .glass-card {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-teal);
+            background: rgba(0, 212, 212, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 0;
+            border: 2px solid var(--accent-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card p {
+            font-size: 0.95rem;
+        }
+
+        /* Connecting Line (pseudo-element) */
+        @media (min-width: 1024px) {
+            .steps-container::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, var(--primary) 0%, var(--accent-teal) 50%, var(--secondary) 100%);
+                z-index: 0;
+                transform: translateY(-50%);
+            }
+
+            .step-card {
+                position: relative;
+                z-index: 1;
+            }
+        }
+
+        /* ============================================
+           FEATURES GRID SECTION
+           ============================================ */
+        #features {
+            padding: 6rem 0;
+            background: var(--bg-light);
+        }
+
+        #features h2 {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .feature-card .glass-card {
+            width: 100%;
+            height: 100%;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-teal);
+            margin-bottom: 1rem;
+            background: rgba(0, 212, 212, 0.1);
+            width: 70px;
+            height: 70px;
+            border-radius: 0;
+            border: 2px solid var(--accent-teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           PRODUCTS SECTION
+           ============================================ */
+        #products {
+            padding: 6rem 0;
+            background: var(--bg-light);
+            border-top: 3px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        #products h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .products-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-soft);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card .glass-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 2.5rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(0, 212, 212, 0.1), rgba(105, 70, 255, 0.1));
+            border-radius: 0;
+            border: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 3.5rem;
+            transition: all 0.25s ease;
+        }
+
+        .product-card:hover .product-image {
+            background: linear-gradient(135deg, rgba(0, 212, 212, 0.15), rgba(105, 70, 255, 0.15));
+            transform: translate(-4px, -4px);
+        }
+
+        .product-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .product-badge {
+            display: inline-block;
+            background: rgba(0, 212, 212, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0;
+            border: 1px solid var(--accent-teal);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .product-description {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            width: 100%;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+        }
+
+        .product-features li {
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .product-features li:before {
+            content: '✓';
+            color: var(--accent-teal);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-cta {
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .product-cta .btn {
+            width: 100%;
+        }
+
+        .products-footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(74, 144, 226, 0.1);
+        }
+
+        .products-footer p {
+            color: var(--text-soft);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ============================================
+           DEMO SECTION (INTERACTIVE)
+           ============================================ */
+        #demo {
+            padding: 6rem 0;
+            background: var(--bg-light);
+        }
+
+        #demo h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .demo-subheading {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-soft);
+            margin-bottom: 3rem;
+        }
+
+        .demo-panel {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            border: 2px solid var(--primary);
+            backdrop-filter: blur(12px);
+            box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.08);
+            transition: background 0.6s ease;
+        }
+
+        .mood-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mood-button {
+            padding: 1rem 1.8rem;
+            border-radius: 0;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .mood-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .mood-button.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .demo-feedback {
+            text-align: center;
+            margin-bottom: 2rem;
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-feedback p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .lighting-representation {
+            height: 150px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(74, 144, 226, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0;
+            transition: all 0.6s ease;
+        }
+
+        /* Demo Panel Backgrounds for Different Moods */
+        .demo-panel.relax {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.08) 0%, rgba(255, 200, 200, 0.05) 100%);
+        }
+
+        .demo-panel.focus {
+            background: linear-gradient(135deg, rgba(0, 212, 212, 0.08) 0%, rgba(0, 212, 212, 0.05) 100%);
+        }
+
+        .demo-panel.sleep {
+            background: linear-gradient(135deg, rgba(28, 46, 74, 0.1) 0%, rgba(105, 70, 255, 0.05) 100%);
+        }
+
+        .lighting-representation.relax {
+            background: linear-gradient(135deg, rgba(0, 212, 212, 0.15), rgba(0, 212, 212, 0.1));
+            box-shadow: 0 0 30px rgba(0, 212, 212, 0.15);
+            border: 2px solid rgba(0, 212, 212, 0.3);
+        }
+
+        .lighting-representation.focus {
+            background: linear-gradient(135deg, rgba(0, 212, 212, 0.15), rgba(0, 212, 212, 0.1));
+            box-shadow: 0 0 30px rgba(0, 212, 212, 0.2);
+            border: 2px solid rgba(0, 212, 212, 0.3);
+        }
+
+        .lighting-representation.sleep {
+            background: linear-gradient(135deg, rgba(105, 70, 255, 0.15), rgba(105, 70, 255, 0.1));
+            box-shadow: 0 0 30px rgba(105, 70, 255, 0.15);
+            border: 2px solid rgba(105, 70, 255, 0.3);
+        }
+
+        /* ============================================
+           ECOSYSTEM SECTION
+           ============================================ */
+        #ecosystem {
+            padding: 6rem 0;
+            background: var(--bg-light);
+            border-top: 3px solid var(--primary);
+        }
+
+        #ecosystem h2 {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .ecosystem-network {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .device-node {
+            width: 160px;
+            height: 160px;
+            border-radius: 0;
+            background: var(--glass-bg);
+            border: 2px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .device-node:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .device-icon {
+            font-size: 2.5rem;
+            color: var(--accent-teal);
+        }
+
+        .device-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        /* Connecting lines with SVG or CSS - using radial approach */
+        .ecosystem-network::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 250px;
+            border: 2px solid rgba(74, 144, 226, 0.1);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .device-node {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .ecosystem-network::before {
+                display: none;
+            }
+
+            .ecosystem-network {
+                gap: 1.5rem;
+            }
+
+            .device-node {
+                width: 120px;
+                height: 120px;
+            }
+
+            .device-icon {
+                font-size: 2rem;
+            }
+        }
+
+        /* ============================================
+           WHY BRIGHTNEST SECTION
+           ============================================ */
+        #why-brightnest {
+            padding: 6rem 0;
+            background: var(--bg-light);
+            border-top: 3px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        #why-brightnest h2 {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .usp-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .usp-card {
+            text-align: center;
+        }
+
+        .usp-icon {
+            font-size: 3rem;
+            color: var(--accent-teal);
+            margin-bottom: 1rem;
+        }
+
+        .usp-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .usp-card p {
+            font-size: 0.95rem;
+        }
+
+        /* ============================================
+           TESTIMONIALS SECTION
+           ============================================ */
+        #testimonials {
+            padding: 6rem 0;
+            background: var(--bg-light);
+        }
+
+        #testimonials h2 {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            padding: 2rem;
+            background: var(--glass-bg);
+            border: 2px solid var(--primary);
+            border-radius: 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.06);
+            transition: all 0.25s ease;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: var(--primary);
+            border-top: 3px solid var(--primary);
+            padding: 3rem 0;
+            color: white;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer .footer-section h4 {
+            color: var(--accent-teal);
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        footer .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        footer .footer-section a:hover {
+            color: var(--accent-teal);
+        }
+
+        footer .social-icons a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0;
+            color: var(--accent-teal);
+            transition: all 0.25s ease;
+        }
+
+        footer .social-icons a:hover {
+            background: var(--accent-teal);
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 0 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE ADJUSTMENTS
+           ============================================ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            #hero,
+            #how-it-works,
+            #features,
+            #demo,
+            #ecosystem,
+            #why-brightnest,
+            #testimonials {
+                padding: 4rem 0;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+            }
+
+            .mood-buttons {
+                gap: 1rem;
+            }
+
+            .mood-button {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         HEADER / NAVIGATION
+         ============================================ -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <i class="fas fa-light-house"></i> BrightNest
+            </a>
+            <ul class="nav-links">
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#demo">Experience</a></li>
+                <li><a href="#ecosystem">Ecosystem</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section id="hero">
+        <div class="hero-background"></div>
+        <div class="hero-orb"></div>
+
+        <div class="container">
+            <div style="display: flex; gap: 3rem; align-items: center; position: relative;">
+                <div class="hero-content">
+                    <h1>A Home That Understands You</h1>
+                    <p>BrightNest adapts your environment to your mood, habits, and lifestyle. Experience the future of living where technology feels personal and intuitive.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="document.getElementById('demo').scrollIntoView();">Explore Ecosystem</button>
+                        <button class="btn btn-outline" onclick="alert('Get Started feature coming soon!')">Get Started</button>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <img src="hero-device.jpg" alt="BrightNest Smart Home Hub with IoT Devices" />
+                </div>
+            </div>
+
+            <div class="floating-cards-container">
+                <div class="floating-card">😌 Relax Mode</div>
+                <div class="floating-card">🧠 Focus Mode</div>
+                <div class="floating-card">🌙 Sleep Mode</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOW IT WORKS SECTION
+         ============================================ -->
+    <section id="how-it-works">
+        <div class="container">
+            <h2 class="fade-up">How It Works</h2>
+            <div class="steps-container">
+                <div class="step-card fade-up">
+                    <div class="glass-card">
+                        <div class="step-icon"><i class="fas fa-radar"></i></div>
+                        <h3>Detect</h3>
+                        <p>Learns your behavior, patterns, and preferences through seamless interaction.</p>
+                    </div>
+                </div>
+                <div class="step-card fade-up">
+                    <div class="glass-card">
+                        <div class="step-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Learn</h3>
+                        <p>Our AI analyzes your habits and adapts intelligently over time.</p>
+                    </div>
+                </div>
+                <div class="step-card fade-up">
+                    <div class="glass-card">
+                        <div class="step-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                        <h3>Respond</h3>
+                        <p>Environment automatically adjusts lighting, temperature, and ambiance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FEATURES GRID SECTION
+         ============================================ -->
+    <section id="features">
+        <div class="container">
+            <h2 class="fade-up">Intelligent Features</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-up">
+                    <div class="glass-card">
+                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Mood-Based Lighting</h3>
+                        <p>Lights that match your rhythm and emotional state throughout the day.</p>
+                    </div>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="glass-card">
+                        <div class="feature-icon"><i class="fas fa-thermometer-half"></i></div>
+                        <h3>Climate Control</h3>
+                        <p>Intelligent temperature management that anticipates your comfort needs.</p>
+                    </div>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="glass-card">
+                        <div class="feature-icon"><i class="fas fa-shield"></i></div>
+                        <h3>Adaptive Security</h3>
+                        <p>Smart protection that learns household patterns and threats.</p>
+                    </div>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="glass-card">
+                        <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                        <h3>Smart Scheduling</h3>
+                        <p>Automation that evolves with your routine and preferences.</p>
+                    </div>
+                </div>
+                <div class="feature-card fade-up">
+                    <div class="glass-card">
+                        <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                        <h3>Energy Optimization</h3>
+                        <p>Reduce your carbon footprint without sacrificing comfort.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PRODUCTS SECTION
+         ============================================ -->
+    <section id="products">
+        <div class="container">
+            <h2 class="fade-up">Our Products</h2>
+            <p class="products-intro fade-up">Explore our carefully engineered smart home devices designed to work seamlessly together and learn from your lifestyle.</p>
+
+            <div class="products-grid">
+                <!-- Smart Lighting Hub -->
+                <div class="product-card fade-up">
+                    <div class="glass-card">
+                        <div class="product-image">💡</div>
+                        <span class="product-badge">Smart Lighting</span>
+                        <h3>Smart Lighting Hub Pro</h3>
+                        <p class="product-description">Intelligent color-changing lights that adapt to your mood and circadian rhythm.</p>
+                        <ul class="product-features">
+                            <li>16 Million Color Options</li>
+                            <li>Voice Control Ready</li>
+                            <li>Mood-Based Adaptation</li>
+                            <li>Energy Efficient</li>
+                        </ul>
+                        <div class="product-price">₹4,999</div>
+                        <div class="product-cta">
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Climate Control Unit -->
+                <div class="product-card fade-up">
+                    <div class="glass-card">
+                        <div class="product-image">🌡️</div>
+                        <span class="product-badge">Climate Control</span>
+                        <h3>Smart Thermostat X</h3>
+                        <p class="product-description">Precision temperature control that learns your comfort preferences and saves energy.</p>
+                        <ul class="product-features">
+                            <li>Predictive Cooling/Heating</li>
+                            <li>Schedule Automation</li>
+                            <li>30% Energy Savings</li>
+                            <li>Multi-Zone Detection</li>
+                        </ul>
+                        <div class="product-price">₹6,499</div>
+                        <div class="product-cta">
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security System -->
+                <div class="product-card fade-up">
+                    <div class="glass-card">
+                        <div class="product-image">📷</div>
+                        <span class="product-badge">Security</span>
+                        <h3>Security Camera Pro</h3>
+                        <p class="product-description">AI-powered security camera with emotion recognition and adaptive alerting.</p>
+                        <ul class="product-features">
+                            <li>4K Ultra HD Video</li>
+                            <li>Night Vision Pro</li>
+                            <li>AI Activity Detection</li>
+                            <li>Cloud & Local Storage</li>
+                        </ul>
+                        <div class="product-price">₹7,999</div>
+                        <div class="product-cta">
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Speaker -->
+                <div class="product-card fade-up">
+                    <div class="glass-card">
+                        <div class="product-image">🔊</div>
+                        <span class="product-badge">Audio</span>
+                        <h3>Voice Assistant Pro</h3>
+                        <p class="product-description">Premium smart speaker with emotion-aware voice recognition and spatial audio.</p>
+                        <ul class="product-features">
+                            <li>360° Spatial Audio</li>
+                            <li>Emotion Detection</li>
+                            <li>16-Hour Battery</li>
+                            <li>Multi-Room Audio</li>
+                        </ul>
+                        <div class="product-price">₹5,499</div>
+                        <div class="product-cta">
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Hub -->
+                <div class="product-card fade-up">
+                    <div class="glass-card">
+                        <div class="product-image">🏠</div>
+                        <span class="product-badge">Control Hub</span>
+                        <h3>BrightNest Hub Central</h3>
+                        <p class="product-description">The intelligent heart of your smart home ecosystem with advanced automation.</p>
+                        <ul class="product-features">
+                            <li>Neural Learning Engine</li>
+                            <li>All Device Integration</li>
+                            <li>Local Processing</li>
+                            <li>Privacy-First Design</li>
+                        </ul>
+                        <div class="product-price">₹9,999</div>
+                        <div class="product-cta">
+                            <button class="btn btn-primary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bundle Package -->
+                <div class="product-card fade-up">
+                    <div class="glass-card">
+                        <div class="product-image">⭐</div>
+                        <span class="product-badge">Bundle Deal</span>
+                        <h3>Complete Home Bundle</h3>
+                        <p class="product-description">Full ecosystem package with all BrightNest devices for the ultimate smart home experience.</p>
+                        <ul class="product-features">
+                            <li>All 5 Core Devices</li>
+                            <li>Professional Setup</li>
+                            <li>24/7 Support</li>
+                            <li>Save ₹4,000</li>
+                        </ul>
+                        <div class="product-price">₹34,999</div>
+                        <div class="product-cta">
+                            <button class="btn btn-primary">View Bundle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-footer fade-up">
+                <p>All products come with 2-year warranty and free software updates for life</p>
+                <button class="btn btn-outline">Compare Models</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         INTERACTIVE DEMO SECTION
+         ============================================ -->
+    <section id="demo">
+        <div class="container">
+            <h2 class="fade-up">Experience Your Mood</h2>
+            <p class="demo-subheading fade-up">Select how you feel — watch BrightNest respond instantly.</p>
+
+            <div class="demo-panel fade-up" id="demoPanel">
+                <div class="mood-buttons">
+                    <button class="mood-button" onclick="activateMood('relax')">😌 Relax</button>
+                    <button class="mood-button" onclick="activateMood('focus')">🧠 Focus</button>
+                    <button class="mood-button" onclick="activateMood('sleep')">🌙 Sleep</button>
+                </div>
+
+                <div class="demo-feedback" id="demoFeedback">
+                    <p>Select a mood to see BrightNest adapt your environment</p>
+                </div>
+
+                <div class="lighting-representation" id="lightingRep">💡</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         ECOSYSTEM SECTION
+         ============================================ -->
+    <section id="ecosystem">
+        <div class="container">
+            <h2 class="fade-up">Connected Ecosystem</h2>
+            <div class="ecosystem-network fade-up">
+                <div class="device-node">
+                    <div class="device-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="device-label">Smart Lights</div>
+                </div>
+                <div class="device-node">
+                    <div class="device-icon"><i class="fas fa-thermometer-half"></i></div>
+                    <div class="device-label">Thermostat</div>
+                </div>
+                <div class="device-node">
+                    <div class="device-icon"><i class="fas fa-camera"></i></div>
+                    <div class="device-label">Security Camera</div>
+                </div>
+                <div class="device-node">
+                    <div class="device-icon"><i class="fas fa-volume-high"></i></div>
+                    <div class="device-label">Smart Speaker</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         WHY BRIGHTNEST SECTION
+         ============================================ -->
+    <section id="why-brightnest">
+        <div class="container">
+            <h2 class="fade-up">Why BrightNest</h2>
+            <div class="usp-container">
+                <div class="usp-card fade-up">
+                    <div class="usp-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Emotion-Aware</h3>
+                    <p>Technology that understands your feelings and responds with empathy, not just commands.</p>
+                </div>
+                <div class="usp-card fade-up">
+                    <div class="usp-icon"><i class="fas fa-user"></i></div>
+                    <h3>Personalized Living</h3>
+                    <p>Every home is unique. BrightNest learns what makes your space perfect for you.</p>
+                </div>
+                <div class="usp-card fade-up">
+                    <div class="usp-icon"><i class="fas fa-plug"></i></div>
+                    <h3>Seamless Integration</h3>
+                    <p>Works with your existing devices and smart home setup effortlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         TESTIMONIALS SECTION
+         ============================================ -->
+    <section id="testimonials">
+        <div class="container">
+            <h2 class="fade-up">What Users Love</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card fade-up">
+                    <p class="testimonial-text">"Finally, a home that knows when I need calm. BrightNest genuinely understands me better than most other apps."</p>
+                    <p class="testimonial-author">– Sarah M.</p>
+                </div>
+                <div class="testimonial-card fade-up">
+                    <p class="testimonial-text">"The AI is so intuitive. It predicts what I need before I even think about asking. It's like having a personal home assistant."</p>
+                    <p class="testimonial-author">– James K.</p>
+                </div>
+                <div class="testimonial-card fade-up">
+                    <p class="testimonial-text">"Beautiful design, powerful technology. BrightNest makes me feel at home in a whole new way."</p>
+                    <p class="testimonial-author">– Elena R.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BrightNest</h4>
+                <p>A Home That Understands You</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#products">Shop Products</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#ecosystem">Ecosystem</a></li>
+                    <li><a href="#demo">Experience Demo</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BrightNest. All rights reserved. Crafted with care for your home.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+        // ============================================
+        // Scroll Reveal (Intersection Observer)
+        // ============================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ============================================
+        // Interactive Demo Section
+        // ============================================
+        const moodData = {
+            relax: {
+                feedback: '✨ Lights dimmed to 30%, calming music enabled, aromatherapy activated',
+                class: 'relax',
+                icon: '💙'
+            },
+            focus: {
+                feedback: '🔵 Cool white light at 100%, focus playlist activated, notifications muted',
+                class: 'focus',
+                icon: '🔍'
+            },
+            sleep: {
+                feedback: '🌙 Warm amber glow at 15%, sleep sounds playing, temperature lowered',
+                class: 'sleep',
+                icon: '😴'
+            }
+        };
+
+        function activateMood(mood) {
+            const demoPanel = document.getElementById('demoPanel');
+            const demoFeedback = document.getElementById('demoFeedback');
+            const lightingRep = document.getElementById('lightingRep');
+            const moodButtons = document.querySelectorAll('.mood-button');
+
+            const data = moodData[mood];
+
+            // Update active button
+            moodButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update panel background
+            demoPanel.className = 'demo-panel fade-up';
+            demoPanel.classList.add(data.class);
+
+            // Update feedback text
+            demoFeedback.innerHTML = `<p>${data.feedback}</p>`;
+
+            // Update lighting representation
+            lightingRep.textContent = data.icon;
+            lightingRep.className = 'lighting-representation';
+            lightingRep.classList.add(data.class);
+        }
+
+        // ============================================
+        // Smooth Link Scrolling (implicit in CSS)
+        // ============================================
+        // The html { scroll-behavior: smooth; } in CSS handles this
+
+        // ============================================
+        // Device Node Hover Animation
+        // ============================================
+        document.querySelectorAll('.device-node').forEach(node => {
+            node.addEventListener('mouseenter', function() {
+                this.style.animation = 'pulse 0.6s ease';
+            });
+        });
+
+        // ============================================
+        // Optional: Animated background based on scroll
+        // ============================================
+        // This can be enhanced further if needed
+    </script>
+
+</body>
+</html>
